@@ -60,38 +60,35 @@ Ball.prototype.collisionDetect = function() {
       const dy = this.y - balls[j].y;
       const distance = Math.sqrt(dx * dx + dy * dy);
 
-      if (distance < this.size + balls[j].size) {
-        const newBall1 = new Ball(
-          this.x + random(-10, 10),
-          this.y + random(-10, 10),
-          random(-7, 7),
-          random(-7,7),
-          'rgb(' + random(0, 255) + ',' + random(0,225) + ',' + random(0,255) + ')',
-          this.size * 0.5
-        );
+        if (distance < this.size + balls[j].size) {
+          this.color = 'rgb(' + random(0,255) + ',' + random(0,255) + ',' + random(0, 255) + ')';
+          balls[j].color = 'rgb(' + random(0, 255) + ',' + random(0, 255) + ',' + random(0, 255) + ')';
 
-        
-        balls.push(newBall1);
-      }
-      
-
-      if (distance < this.size + balls[j].size) {
-        balls[j].color = this.color = 'rgb(' + random(0, 255) + ',' + random(0, 255) + ',' + random(0, 255) +')';
+          const newBall1 = new Ball(
+            this.x + random(-10, 10),
+            this.y + random(-10, 10),
+            random(-5, 5),
+            random(-5, 5),
+            'rgb(' + random(0, 255) + ',' + random(0, 255) + ',' + random(0, 255) + ')',
+            this.size * 0.5
+          );
+          balls.push(newBall);
+        }
       }
     }
   }
-}
+
 
 let balls = [];
 
-while (balls.length < 50) {
-  let size = random(10,20);
+while (balls.length < 4) {
+  let size = random(10, 20);
   let ball = new Ball(
-    random(0 + size,width - size),
-    random(0 + size,height - size),
+    random(0 + size, width - size),
+    random(0 + size, height - size),
     random(-7,7),
     random(-7,7),
-    'rgb(' + random(0,255) + ',' + random(0,255) + ',' + random(0,255) +')',
+    'rgb(' + random(0, 255) + ',' + random(0, 255) + ',' + random(0, 255) +')',
     size
   );
 
@@ -99,7 +96,7 @@ while (balls.length < 50) {
 }
 
 function loop() {
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
   ctx.fillRect(0, 0, width, height);
 
   for (let i = 0; i < balls.length; i++) {
