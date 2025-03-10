@@ -67,19 +67,11 @@ Ball.prototype.collisionDetect = function() {
           random(-7, 7),
           random(-7,7),
           'rgb(' + random(0, 255) + ',' + random(0,225) + ',' + random(0,255) + ')',
-          random(10, 20)
+          this.size * 0.5
         );
 
-        const newBall2 = new Ball(
-          this.x + random(-10, 10),
-          this.y + random(-10, 10),
-          random(-7, 7),
-          random(-7,7),
-          'rgb(' + random(0, 255) + ',' + random(0,225) + ',' + random(0,255) + ')',
-          random(10, 20)
-        );
+        
         balls.push(newBall1);
-        balls.push(newBall2);
       }
       
 
