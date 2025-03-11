@@ -6,7 +6,7 @@ const ctx = canvas.getContext('2d');
 const width = canvas.width = window.innerWidth;
 const height = canvas.height = window.innerHeight;
 
-// function to generate random number
+
 
 function random(min, max) {
   const num = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -53,6 +53,30 @@ Ball.prototype.update = function() {
   this.y += this.velY;
 }
 
+function Particle(x, y, velX, velY, color, size) {
+  this.x = x;
+  this.y = y;
+  this.velX = velX;
+  this.velY = velY;
+  this.color = color;
+  this.size = size;
+  this.life = 1;
+}
+
+Particle.prototype.update = function() {
+  this.x += this.velX;
+  this.y += thisvelY;
+  this.size *= 0.98;
+  this.life -= 0.02;
+}
+
+Particle.prototype.draw = function() {
+  ctx.beginPath();
+  ctx.fillStyle = `rgba (${this.color}, ${this.life})`;
+  ctx.arc(rhis.x, this.y, this.size, 0, 2 * Math.PI);
+  ctx.fill();
+}
+
 Ball.prototype.collisionDetect = function() {
   for (let j = 0; j < balls.length; j++) {
     if (!(this === balls[j])) {
@@ -64,15 +88,17 @@ Ball.prototype.collisionDetect = function() {
           this.color = 'rgb(' + random(0,255) + ',' + random(0,255) + ',' + random(0, 255) + ')';
           balls[j].color = 'rgb(' + random(0, 255) + ',' + random(0, 255) + ',' + random(0, 255) + ')';
 
-          const newBall1 = new Ball(
-            this.x + random(-10, 10),
-            this.y + random(-10, 10),
-            random(-5, 5),
-            random(-5, 5),
-            'rgb(' + random(0, 255) + ',' + random(0, 255) + ',' + random(0, 255) + ')',
-            this.size * 0.5
-          );
-          balls.push(newBall);
+          for (let i = 0; i < 10; i++) {
+            let particle = new Particle(
+              this.x,
+              this.y,
+              random(-5, 5),
+              random(-5, 5),
+              random(0, 255) + ',' + random(0,255), + ',' +  random(0, 255),
+              random(2, 5)
+            );
+            particles.push(particle);
+          }
         }
       }
     }
@@ -80,6 +106,7 @@ Ball.prototype.collisionDetect = function() {
 
 
 let balls = [];
+let particles = [];
 
 while (balls.length < 4) {
   let size = random(10, 20);
@@ -105,7 +132,18 @@ function loop() {
     balls[i].collisionDetect();
   }
 
+  for (let i = 0; i < particles.length; i++) {
+    particles[i].update();
+    particles[i].draw();
+  
+    if(particles[i].life <= 0) {
+      particles.splice(i, 1);
+      i--;
+    }
+  } 
+    
   requestAnimationFrame(loop);
 }
+
 loop();
 
